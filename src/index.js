@@ -28,19 +28,19 @@ function fetchHandler(name) {
     fetchCountries(name)
     .then(data => {
         console.log(data);
-        if(data.lenght > 10){
+        if(data.length > 10){
             clearContent();
             Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-            return
-        } if(data.lenght > 2 && data.lenght < 10) {
+            return;
+        } if(data.length > 2 && data.lenght < 10) {
             clearContent();
             countryListMarkup(data);
-            return
-        } if(data.lenght = 1) {
+            return;
+        } if(data.length = 1) {
             clearContent();
             countryListMarkup(data);
             countryInfoMarkup(data);
-            return
+            return;
         }
     })
     .catch(error => {
