@@ -13,6 +13,7 @@ searchEl.addEventListener('input', debounce(countrySearch, DEBOUNCE_DELAY));
 document.getElementById('search-box').placeholder = 'Enter country name';
 
 
+
 function countrySearch(e) {
     let name = e.target.value.trim();
     if(name === ''){
@@ -21,18 +22,17 @@ function countrySearch(e) {
         fetchHandler(name);
     }
     
-    // console.log(name);
+    console.log(name);
 }
 
 function fetchHandler(name) {
     fetchCountries(name)
     .then(data => {
-        console.log(data);
         if(data.length > 10){
             clearContent();
             Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
             return;
-        } if(data.length > 2 && data.lenght < 10) {
+        } if(data.length >= 2 && data.length <= 10) {
             clearContent();
             countryListMarkup(data);
             return;
@@ -50,11 +50,14 @@ function fetchHandler(name) {
 }
 
 function countryListMarkup(data) {
-    const markup = data.map(({ name: { official }, flags: { svg } }) => {
+    // console.log(data);
+    const markup = data.map(({ name: { official }, flags: { svg } }, count) => {
+        console.log(count);
         return `<li><img src=${svg} width='50'></img>${official}</li>`;
     })
     countryListEl.innerHTML = markup.join('');
 }
+
 
 function countryInfoMarkup(data) {
     const markup = data.map(({ capital, population, languages }) => {
@@ -69,3 +72,5 @@ function countryInfoMarkup(data) {
     countryListEl.innerHTML = '';
     countryInfoEl.innerHTML = '';
  }
+
+
